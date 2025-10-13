@@ -40,3 +40,4 @@ knip.jsonc
 .aws-sam
 bin
 obj
+dotnet
