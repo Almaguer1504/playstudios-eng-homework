@@ -17,3 +17,11 @@ For Backend: `cd backend`
 - **Build:** `sam build --template api.yaml`
 - **Start:** `sam local start-api`
 - Api should be running on: `http://127.0.0.1:3000/`
+
+!!Important. For Admin First Access
+Create a new "users" collection to MongoDB on your configured database
+Add default-admin-user.json to "users" collection
+
+Default Credentials:
+- **Email:** playstudios@admin.com
+- **Password:** PlaystudiosAdmin123

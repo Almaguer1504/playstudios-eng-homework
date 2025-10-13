@@ -1,0 +1,14 @@
+{
+  "_id": {
+    "$oid": "68ed2ad1eb4028331592beb8"
+  },
+  "Name": "Playstudios Admin",
+  "Role": "Programmer",
+  "Email": "playstudios@admin.com",
+  "PasswordHash": "$2a$10$XQmMiwER2AH5S.TEAeXCheljIKUvTPEYM8YwCdlHQqnVXZutVJw8K",
+  "IsAdmin": true,
+  "Pic": "http://res.cloudinary.com/gc-studios/image/upload/v1760373452/runiverse/users/torpizkuoqlykswnfyoz.png",
+  "CreatedAt": {
+    "$date": "2025-10-13T16:37:37.537Z"
+  }
+}
