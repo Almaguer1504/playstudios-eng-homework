@@ -1,0 +1,22 @@
+{
+  "type": "REQUEST",
+  "methodArn": "arn:aws:execute-api:us-east-1:123456789012:abcdefghij/test/GET/protected",
+  "resource": "/prizes",
+  "path": "/prizes",
+  "httpMethod": "POST",
+  "headers": {
+    "Cookie": "jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTY5ZmY4MzE3MjcwYjM5MzQyNTFkZiIsInN1YiI6IjY4ZTY5ZmY4MzE3MjcwYjM5MzQyNTFkZiIsIm5iZiI6MTc1OTk1MTkzMCwiZXhwIjoxNzU5OTU1NTMwLCJpYXQiOjE3NTk5NTE5MzAsImlzcyI6ImFiZSIsImF1ZCI6ImRldiJ9.7BoljofydA0u0jRbQkm_7-Fxpguz0A3oeQKVunCvN1s; Expires=Wed, 08 Oct 2025 20:32:10 GMT; HttpOnly; Secure; SameSite=Strict; Path=/"
+  },
+  "queryStringParameters": null,
+  "pathParameters": null,
+  "stageVariables": null,
+  "requestContext": {
+    "accountId": "123456789012",
+    "apiId": "abcdefghij",
+    "resourceId": "klmnop",
+    "stage": "test",
+    "identity": {
+      "sourceIp": "127.0.0.1"
+    }
+  }
+}

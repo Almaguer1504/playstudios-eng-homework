@@ -1,0 +1,32 @@
+version = 0.1
+
+[default.global.parameters]
+stack_name = "NewApi"
+region = "us-east-1"
+
+[default.build.parameters]
+cached = true
+parallel = true
+
+[default.validate.parameters]
+lint = true
+
+[default.deploy.parameters]
+capabilities = "CAPABILITY_IAM"
+confirm_changeset = true
+resolve_s3 = true
+
+[default.package.parameters]
+resolve_s3 = true
+
+[default.sync.parameters]
+watch = true
+template_file = "/Users/abrahamalmaguer/Documents/Playstudios/playstudios-eng-test/backend/api/api.yaml"
+s3_bucket = "my-api-abe-as-1504"
+dependency_layer = false
+
+[default.local_start_api.parameters]
+warm_containers = "EAGER"
+
+[default.local_start_lambda.parameters]
+warm_containers = "EAGER"

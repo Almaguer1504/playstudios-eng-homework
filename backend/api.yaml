@@ -1,0 +1,231 @@
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  AuthorizerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: Authorizer::Authorizer.TokenAuthorizer::Handle
+      Runtime: dotnet8
+      CodeUri: src/Authorizer
+      MemorySize: 256
+      Timeout: 10
+      Policies:
+        - AWSLambdaBasicExecutionRole
+  Api:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      MiHttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+          - "http://127.0.0.1:8000"
+        AllowMethods:
+          - GET
+          - POST
+          - OPTIONS
+          - PUT
+          - DELETE
+        AllowHeaders:
+          - Authorization
+          - Content-Type
+          - X-Api-Key
+        AllowCredentials: true
+        MaxAge: 300 
+      Auth:
+        DefaultAuthorizer: NONE
+        Authorizers:
+          TokenValidationAuth:
+            AuthorizerPayloadFormatVersion: '2.0'
+            AuthorizerType: Request
+            IdentitySource: $request.header.Cookie
+            FunctionArn: !GetAtt AuthorizerFunction.Arn
+            EnableSimpleResponses: true
+            EnableFunctionDefaultPermissions: true
+  CreatePrize:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: CreatePrize
+      CodeUri: src/CreatePrize
+      Handler: CreatePrize::CreatePrize.Function::FunctionHandler
+      Runtime: dotnet8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Events:
+        ApiPOSTprizes:
+          Type: HttpApi
+          Properties:
+            Path: /prizes
+            Method: POST
+            ApiId: !Ref Api
+            Auth:
+              Authorizer: TokenValidationAuth
+      Layers:
+        - !Ref MongoDBConfig
+  DeletePrize:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} DeletePrize ${ResourceName}
+        - ResourceName: DeletePrize
+      CodeUri: src/DeletePrize
+      Handler: DeletePrize::DeletePrize.Function::FunctionHandler
+      Runtime: dotnet8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Events:
+        ApiDELETEprizes:
+          Type: HttpApi
+          Properties:
+            Path: /prizes/{id}
+            Method: DELETE
+            ApiId: !Ref Api
+            Auth:
+              Authorizer: TokenValidationAuth
+      Layers:
+        - !Ref MongoDBConfig
+  GetPrizes:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: CreatePrize
+      CodeUri: src/GetPrizes
+      Handler: GetPrizes::GetPrizes.Function::FunctionHandler
+      Runtime: dotnet8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Events:
+        ApiGETprizes:
+          Type: HttpApi
+          Properties:
+            Path: /prizes
+            Method: GET
+            ApiId: !Ref Api
+      Layers:
+        - !Ref MongoDBConfig
+  UserLogin:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: UserLogin
+      CodeUri: src/UserLogin
+      Handler: UserLogin::UserLogin.Login::AuthUserHandler
+      Runtime: dotnet8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Events:
+        ApiPOSTlogin:
+          Type: HttpApi
+          Properties:
+            Path: /login
+            Method: POST
+            ApiId: !Ref Api
+      Layers:
+        - !Ref MongoDBConfig
+  UserLogout:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: UserLogin
+      CodeUri: src/UserLogin
+      Handler: UserLogin::UserLogin.Login::UnauthUserHandler
+      Runtime: dotnet8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Events:
+        ApiDELETElogout:
+          Type: HttpApi
+          Properties:
+            Path: /login
+            Method: DELETE
+            ApiId: !Ref Api
+      Layers:
+        - !Ref MongoDBConfig
+  GetUsers:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: GetUsers
+      CodeUri: src/GetUsers
+      Handler: GetUsers::GetUsers.Function::FunctionHandler
+      Runtime: dotnet8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Events:
+        ApiGETusers:
+          Type: HttpApi
+          Properties:
+            Path: /users
+            Method: GET
+            ApiId: !Ref Api
+            Auth:
+              Authorizer: TokenValidationAuth
+      Layers:
+        - !Ref MongoDBConfig
+  CreateUser:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} CreateUser ${ResourceName}
+        - ResourceName: CreateUser
+      CodeUri: src/CreateUser
+      Handler: CreateUser::CreateUser.Function::FunctionHandler
+      Runtime: dotnet8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Events:
+        ApiPOSTprizes:
+          Type: HttpApi
+          Properties:
+            Path: /users
+            Method: POST
+            ApiId: !Ref Api
+            Auth:
+              Authorizer: TokenValidationAuth
+      Layers:
+        - !Ref MongoDBConfig
+  DeleteUser:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} DeleteUser ${ResourceName}
+        - ResourceName: DeleteUser
+      CodeUri: src/DeleteUser
+      Handler: DeleteUser::DeleteUser.Function::FunctionHandler
+      Runtime: dotnet8
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Events:
+        ApiDELETEprizes:
+          Type: HttpApi
+          Properties:
+            Path: /users/{id}
+            Method: DELETE
+            ApiId: !Ref Api
+            Auth:
+              Authorizer: TokenValidationAuth
+      Layers:
+        - !Ref MongoDBConfig
+  MongoDBConfig:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      Description: !Sub
+        - Stack ${AWS::StackName} Layer ${ResourceName}
+        - ResourceName: MongoDBConfig
+      ContentUri: src/MongoDBConfig
+      RetentionPolicy: Retain
+    Metadata:
+      BuildMethod: dotnet8
