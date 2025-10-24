@@ -33,11 +33,12 @@ Globals:
         MONGODB_URI: # your mongodb+srv:// database uri. DEFAULT: "mongodb://172.17.0.1:27017/"
         MONGODB_DATABASE: # the name of mongo db to use. DEFAULT: "prizesapp"
         
-
-!!Important. For Admin First Access
+!! Important. Set Up Database        
 Create your new database MongoDB. (**Use the same name configured on environment variables**)
 Create a new "prizes" collection to MongoDB on your configured database
 Create a new "users" collection to MongoDB on your configured database
+
+!!Important. For Admin First Access
 Add default-admin-user.json to "users" collection
 
 Default Credentials:
