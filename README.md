@@ -1,8 +1,15 @@
-!!Important. NodeJs Needed!
-!!Important. SamCli Needed!
-!!Important. You will need to have docker installed and runing to start
+## CHANGES UPDATE !!
+- Environment variables added.
+- DB config params added.  
 
- For Frontend: `cd frontend`
+## Important !!
+- NodeJs Needed! (v20.18.3)
+- Npm Needed! (v10.8.2)
+- SamCli Needed! (https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
+- You will need to have docker installed and runing to start (https://hub.docker.com/search/?type=edition&offering=community)
+
+## For Frontend:
+- `cd frontend`
 - Recommended: `Node.js v20.x`
 - **Install:** `npm i` or `yarn install`
 - **Start:** `npm run dev` or `yarn dev`
@@ -10,7 +17,8 @@
 - Open browser: `http://127.0.0.1:8000/`
 
 
-For Backend: `cd backend`
+## For Backend: 
+- `cd backend`
 - **Setting Local MongoDB:** `docker pull mongodb/mongodb-community-server`
 - **For Data Persistance:** `docker volume create mongodb_data`
 - **Run Services:** `docker run --name mongodb -d -p 27017:27017 -v mongodb_data:/data/db mongodb/mongodb-community-server`
@@ -19,10 +27,15 @@ For Backend: `cd backend`
 - Api should be running on: `http://127.0.0.1:3000/`
 
 
-!!Important. You need to set up the following environment variables in the api.yaml file. Avoid committing them to git.
 
+## Environment Setup:
+
+
+You need to set up the following environment variables in the api.yaml file. Avoid committing them to git.
+
+```yaml
 Globals:
-  Function:
+Function:
     Timeout: 10
     MemorySize: 512
     Environment:
@@ -32,14 +45,15 @@ Globals:
         TOKEN_AUDIENCE: # your JWT token audience. DEFAULT: "dev"
         MONGODB_URI: # your mongodb+srv:// database uri. DEFAULT: "mongodb://172.17.0.1:27017/"
         MONGODB_DATABASE: # the name of mongo db to use. DEFAULT: "prizesapp"
+```
         
-!! Important. Set Up Database        
-Create your new database MongoDB. (**Use the same name configured on environment variables**)
-Create a new "prizes" collection to MongoDB on your configured database
-Create a new "users" collection to MongoDB on your configured database
+## Database Setup:       
+- Create your new database MongoDB. (**Use the same name configured on environment variables**)
+- Create a new "**prizes**" collection to MongoDB on your configured database
+- Create a new "**users**" collection to MongoDB on your configured database
 
-!!Important. For Admin First Access
-Add default-admin-user.json to "users" collection
+## For Admin First Access:
+Add **default-admin-user.json** to "**users**" collection
 
 Default Credentials:
 - **Email:** playstudios@admin.com
