@@ -1,6 +1,6 @@
 ## CHANGES UPDATE !!
-- Environment variables added.
-- DB config params added.  
+- [Environment Setup](https://github.com/Almaguer1504/playstudios-eng-homework?tab=readme-ov-file#environment-setup).
+- [Database Setup](https://github.com/Almaguer1504/playstudios-eng-homework?tab=readme-ov-file#database-setup).  
 
 ## Important !!
 - NodeJs Needed! (v20.18.3)
